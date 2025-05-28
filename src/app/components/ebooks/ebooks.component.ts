@@ -31,7 +31,7 @@ export class EbooksComponent implements OnInit{
 
     this.ebookService.getEbooks().subscribe(
       data => {
-        console.log('Ebooks=' + JSON.stringify(data));
+        //console.log('Ebooks=' + JSON.stringify(data));
         this.ebooks = data;
       }
     )

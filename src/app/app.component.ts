@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
+import { LoginStatusComponent } from './components/login-status/login-status.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterModule,
-    NavbarComponent
+    LoginStatusComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
