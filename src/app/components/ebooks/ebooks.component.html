@@ -1,26 +1,27 @@
 <div class="main-content">
-    <div class="section-content section-content-p30">
-        <div class="container-fluid">
-            <div class="row">
+  <div class="section-content section-content-p30">
+    <h1>Ebooks Library</h1>
+    <div class="container-fluid">
+      <div class="row">
+        <div *ngFor="let ebook of ebooks" class="col-md-3">
+          <div class="product-box">
+            <a routerLink="/ebooks/{{ ebook.id }}">
+              <img
+                src="{{ ebook.folderPath }}/placeholder.png"
+                class="img-responsive"
+                alt="a placehoder for this ebook"
+              />
+            </a>
 
-                <div *ngFor="let ebook of ebooks" class="col-md-3">
+            <a routerLink="/ebooks/{{ ebook.id }}">
+              <h2>{{ ebook.title }}</h2>
+            </a>
 
-                    <div class="product-box">
-
-                        <a routerLink="">
-                            <img src="assets/images/ebooks/placeholder.png" class="img-responsive" alt="a placehoder for this ebook">
-                        </a>
-
-                        <a routerLink="/ebooks">
-                            <h1>{{ ebook.title }}</h1>
-                        </a>
-
-                        <div class="price">{{ ebook.price }}</div>
-                        <button class="btn btn-primary btn-sm">Locked</button>
-                    </div>
-
-                </div>
-            </div>
+            <div class="price">{{ ebook.price }}</div>
+            <button class="btn btn-primary btn-sm">Add to cart</button>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

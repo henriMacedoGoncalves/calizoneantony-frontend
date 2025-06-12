@@ -1,17 +1,18 @@
-<div>
-    <nav>
-        <ul>
-            <li *ngIf="!isAuthenticated"><a routerLink="/">Introduction</a></li>
-            <li *ngIf="!isAuthenticated"><a routerLink="/aboutme">About me</a></li>
-            <li *ngIf="!isAuthenticated"><a routerLink="/community">Community</a></li>
-            <li *ngIf="!isAuthenticated"><a routerLink="/login">Login</a></li>
+<nav>
+  <ul>
+    <li *ngIf="!isAuthenticated"><a routerLink="/">Introduction</a></li>
+    <li *ngIf="!isAuthenticated"><a routerLink="/aboutme">About me</a></li>
+    <li *ngIf="!isAuthenticated"><a routerLink="/community">Community</a></li>
 
-
-            <li *ngIf="isAuthenticated"><a routerLink="/overview">Overview</a></li>
-            <li *ngIf="isAuthenticated"><a routerLink="/ebooks">Ebooks</a></li>
-            <li *ngIf="isAuthenticated"><a routerLink="/onlinecoaching">Online Coaching</a></li>
-            <li *ngIf="isAuthenticated"><a routerLink="/cart">Cart</a></li>
-            <li *ngIf="isAuthenticated"><a routerLink="/profile">Profile</a></li>
-        </ul>
-    </nav>
-</div>
+    <li *ngIf="isAuthenticated"><a routerLink="/overview">Overview</a></li>
+    <li *ngIf="isAuthenticated"><a routerLink="/ebooks">Ebooks</a></li>
+    <li *ngIf="isAuthenticated">
+      <a routerLink="/onlinecoaching">Online Coaching</a>
+    </li>
+  </ul>
+  <ul>
+    <li *ngIf="!isAuthenticated"><a routerLink="/login">Login</a></li>
+    <li *ngIf="isAuthenticated"><a routerLink="/cart">Cart</a></li>
+    <li *ngIf="isAuthenticated"><a routerLink="/profile">Profile</a></li>
+  </ul>
+</nav>

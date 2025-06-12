@@ -1,1 +1,38 @@
-<p>onlinecoaching works!</p>
+<h1>Online Coaching</h1>
+
+<button *ngIf="isSubscribed" (click)="toggleView()">Is Subscribed</button>
+
+<button *ngIf="!isSubscribed" (click)="toggleView()">Is not Subscribed</button>
+
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div *ngIf="isSubscribed" id="subscribed-container">
+        <full-calendar
+          [options]="calendarOptions()"
+          [events]="eventsPromise | async"
+        ></full-calendar>
+      </div>
+      <div *ngIf="!isSubscribed" id="unsubscribed-container">
+        <div class="row">
+          <div *ngFor="let onlineCoaching of onlineCoachings" class="col-md-3">
+            <a routerLink="">
+              <img
+                src="assets/images/ebooks/placeholder.png"
+                class="img-responsive"
+                alt="a placeholder for this online coaching"
+              />
+            </a>
+
+            <a routerLink="">
+              <h1>{{ onlineCoaching.title }}</h1>
+            </a>
+
+            <div class="price">{{ onlineCoaching.price }}</div>
+            <button class="btn btn-primary btn-sm">Add to cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
