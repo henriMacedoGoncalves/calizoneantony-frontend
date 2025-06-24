@@ -18,7 +18,7 @@
           <div *ngFor="let onlineCoaching of onlineCoachings" class="col-md-3">
             <a routerLink="">
               <img
-                src="assets/images/ebooks/placeholder.png"
+                src="{{ onlineCoaching.folderPath }}/placeholder.png"
                 class="img-responsive"
                 alt="a placeholder for this online coaching"
               />
