@@ -3,6 +3,8 @@ import { EbookService } from '../../services/ebook.service';
 import { Ebook } from '../../common/ebook';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CartService } from '../../services/cart.service';
+import { CartItem } from '../../common/cart-item';
 
 @Component({
   selector: 'app-ebooks',
@@ -15,6 +17,7 @@ export class EbooksComponent implements OnInit {
 
   constructor(
     private ebookService: EbookService,
+    private cartService: CartService,
     private route: ActivatedRoute
   ) {}
 
@@ -29,5 +32,16 @@ export class EbooksComponent implements OnInit {
       //console.log('Ebooks=' + JSON.stringify(data));
       this.ebooks = data;
     });
+  }
+
+  addToCart(ebook: Ebook) {
+    const cartItem = new CartItem(
+      ebook.id,
+      ebook.title,
+      ebook.folderPath,
+      ebook.price
+    );
+
+    this.cartService.addToCart(cartItem);
   }
 }

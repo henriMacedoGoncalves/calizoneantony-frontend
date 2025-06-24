@@ -12,7 +12,7 @@
   </ul>
   <ul>
     <li *ngIf="!isAuthenticated"><a routerLink="/login">Login</a></li>
-    <li *ngIf="isAuthenticated"><a routerLink="/cart">Cart</a></li>
+    <li *ngIf="isAuthenticated"><app-cart-status></app-cart-status></li>
     <li *ngIf="isAuthenticated"><a routerLink="/profile">Profile</a></li>
   </ul>
 </nav>

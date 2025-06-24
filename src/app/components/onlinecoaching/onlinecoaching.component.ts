@@ -8,6 +8,8 @@ import listPlugin from '@fullcalendar/list';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import { OnlineCoachingService } from '../../services/online-coaching.service';
 import { OnlineCoaching } from '../../common/online-coaching';
+import { CartService } from '../../services/cart.service';
+import { CartItem } from '../../common/cart-item';
 
 @Component({
   selector: 'app-onlinecoaching',
@@ -20,7 +22,10 @@ export class OnlinecoachingComponent implements OnInit {
   isSubscribed: boolean = false;
   onlineCoachings!: OnlineCoaching[];
 
-  constructor(private onlineCoachingService: OnlineCoachingService) {}
+  constructor(
+    private onlineCoachingService: OnlineCoachingService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit() {
     this.listOnlineCoachings();
@@ -65,5 +70,15 @@ export class OnlinecoachingComponent implements OnInit {
 
   handleDateClick(arg: DateClickArg): void {
     console.log(arg.dateStr);
+  }
+
+  addToCart(onlineCoaching: OnlineCoaching) {
+    const cartItem = new CartItem(
+      onlineCoaching.id,
+      onlineCoaching.title,
+      onlineCoaching.folderPath,
+      onlineCoaching.price
+    );
+    this.cartService.addToCart(cartItem);
   }
 }

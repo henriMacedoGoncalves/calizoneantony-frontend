@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { EbookService } from '../../services/ebook.service';
 import { Ebook } from '../../common/ebook';
+import { CartService } from '../../services/cart.service';
+import { CartItem } from '../../common/cart-item';
 
 @Component({
   selector: 'app-ebook-details',
@@ -14,7 +16,8 @@ export class EbookDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private ebookService: EbookService
+    private ebookService: EbookService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -29,5 +32,16 @@ export class EbookDetailsComponent implements OnInit {
     this.ebookService.getEbook(ebookId).subscribe((data) => {
       this.ebook = data;
     });
+  }
+
+  addToCart() {
+    const cartItem = new CartItem(
+      this.ebook.id,
+      this.ebook.title,
+      this.ebook.folderPath,
+      this.ebook.price
+    );
+
+    this.cartService.addToCart(cartItem);
   }
 }

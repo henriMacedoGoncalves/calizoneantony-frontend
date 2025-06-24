@@ -29,7 +29,12 @@
             </a>
 
             <div class="price">{{ onlineCoaching.price }}</div>
-            <button class="btn btn-primary btn-sm">Add to cart</button>
+            <button
+              (click)="addToCart(onlineCoaching)"
+              class="btn btn-primary btn-sm"
+            >
+              Add to cart
+            </button>
           </div>
         </div>
       </div>
