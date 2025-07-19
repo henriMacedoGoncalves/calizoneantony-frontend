@@ -61,4 +61,16 @@ export class CartService {
 
     this.updateCartTotals();
   }
+
+  removeCartItem(cartItem: CartItem) {
+    const index = this.cartItems.findIndex(
+      (currentCartItem) => currentCartItem.id === cartItem.id
+    );
+
+    if (index > -1) {
+      this.cartItems.splice(index, 1);
+
+      this.updateCartTotals();
+    }
+  }
 }

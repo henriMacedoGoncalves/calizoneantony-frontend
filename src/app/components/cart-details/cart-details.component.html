@@ -1,1 +1,12 @@
-<p>cart-details works!</p>
+<div *ngIf="cartItems.length > 0">
+  <div *ngFor="let cartItem of cartItems" class="col-md-3">
+    <p>{{ cartItem.title }} {{ cartItem.price }}</p>
+    <button (click)="removeCartItem(cartItem)">Remove</button>
+  </div>
+  <div>
+    <p>Total: {{ totalPrice }}</p>
+    <a routerLink="/checkout">Checkout</a>
+  </div>
+</div>
+
+<div *ngIf="cartItems.length == 0">Your shopping cart is empty.</div>

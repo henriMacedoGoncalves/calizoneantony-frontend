@@ -9,6 +9,7 @@ import { OnlinecoachingComponent } from './components/onlinecoaching/onlinecoach
 import { AboutMeComponent } from './components/about-me/about-me.component';
 import { EbookDetailsComponent } from './components/ebook-details/ebook-details.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 export const routes: Routes = [
   { path: '', component: IntroductionComponent },
@@ -21,4 +22,5 @@ export const routes: Routes = [
   { path: 'onlinecoaching', component: OnlinecoachingComponent },
   { path: 'cart', component: CartDetailsComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'checkout', component: CheckoutComponent },
 ];

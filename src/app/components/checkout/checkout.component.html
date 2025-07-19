@@ -1,0 +1,105 @@
+<form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+  <div>
+    <table formGroupName="user">
+      <tr>
+        <th>
+          <h3>User details</h3>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <label for="firstName">First Name</label>
+          <input id="firstName" formControlName="firstName" type="text" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="lastName">Last Name</label>
+          <input id="lastName" formControlName="lastName" type="text" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="email">Email</label>
+          <input id="email" formControlName="email" type="text" />
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div>
+    <table>
+      <tr>
+        <th><h3>Billing Address</h3></th>
+      </tr>
+      <tr>
+        <td>
+          <label>Country</label>
+          <input type="text" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>State / Region</label>
+          <input type="text" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Address</label>
+          <input type="text" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Zip Code</label>
+          <input type="text" />
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div>
+    <table>
+      <tr>
+        <th>
+          <h3>Credit Card Details</h3>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <label>Name of Card Holder</label>
+          <input type="text" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Card Number</label>
+          <input type="text" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Expiration date</label>
+          <input type="text" />
+        </td>
+        <td>
+          <label>Secret Code</label>
+          <input type="text" />
+        </td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>
+          <h3>Total</h3>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <p>Price: {{ totalPrice }}</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+</form>
