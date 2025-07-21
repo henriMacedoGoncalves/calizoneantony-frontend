@@ -28,20 +28,32 @@
   </div>
 
   <div>
-    <table>
+    <table formGroupName="billingAddress">
       <tr>
         <th><h3>Billing Address</h3></th>
       </tr>
       <tr>
         <td>
-          <label>Country</label>
-          <input type="text" />
+          <select
+            formControlName="country"
+            (change)="getStates('billingAddress')"
+          >
+            <option *ngFor="let country of countries" [ngValue]="country">
+              {{ country.title }}
+            </option>
+          </select>
         </td>
       </tr>
       <tr>
         <td>
-          <label>State / Region</label>
-          <input type="text" />
+          <select formControlName="state">
+            <option
+              *ngFor="let state of billingAddressStates"
+              [ngValue]="state"
+            >
+              {{ state.title }}
+            </option>
+          </select>
         </td>
       </tr>
       <tr>
@@ -98,6 +110,7 @@
       <tr>
         <td>
           <p>Price: {{ totalPrice }}</p>
+          <button type="submit">Purchase</button>
         </td>
       </tr>
     </table>

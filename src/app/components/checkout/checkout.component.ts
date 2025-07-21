@@ -9,6 +9,9 @@ import {
 } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
+import { CaliZoneAntonyService } from '../../services/cali-zone-antony.service';
+import { State } from '../../common/state';
+import { Country } from '../../common/country';
 
 @Component({
   selector: 'app-checkout',
@@ -19,11 +22,15 @@ import { CommonModule } from '@angular/common';
 export class CheckoutComponent implements OnInit {
   checkoutForm!: FormGroup;
 
+  countries: Country[] = [];
+  billingAddressStates: State[] = [];
+
   totalPrice: number = 0;
 
   constructor(
     private formBuilder: FormBuilder,
-    private cartService: CartService
+    private cartService: CartService,
+    private caliZoneAntonyService: CaliZoneAntonyService
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +51,26 @@ export class CheckoutComponent implements OnInit {
           Validators.minLength(2),
         ]),
       }),
-      billingAddress: this.formBuilder.group({}),
+      billingAddress: this.formBuilder.group({
+        street: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+        ]),
+        city: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+        ]),
+        state: new FormControl('', [Validators.required]),
+        country: new FormControl('', [Validators.required]),
+        zipCode: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+        ]),
+      }),
+    });
+
+    this.caliZoneAntonyService.getCountries().subscribe((data) => {
+      this.countries = data;
     });
   }
 
@@ -54,17 +80,23 @@ export class CheckoutComponent implements OnInit {
     );
   }
 
-  onSubmit() {}
-
-  notOnlyWhitespace(control: FormControl): ValidationErrors {
-    if (control.value != null && control.value.trim().length === 0) {
-      return { notOnlyWhitespace: true };
-    } else {
-      return { notOnlyWhitespace: false };
-    }
+  onSubmit() {
+    console.log(this.checkoutForm);
   }
 
-  get firstName() {
-    return this.checkoutForm.get('user.firstName');
+  getStates(formGroupName: string) {
+    const formGroup = this.checkoutForm.get(formGroupName);
+
+    const countryCode = formGroup?.value.country.code;
+    const countryName = formGroup?.value.country.title;
+
+    console.log(`${formGroupName} country code: ${countryCode}`);
+    console.log(`${formGroupName} country name: ${countryName}`);
+
+    this.caliZoneAntonyService.getStates(countryCode).subscribe((data) => {
+      this.billingAddressStates = data;
+
+      formGroup!.get('state')?.setValue(data[0]);
+    });
   }
 }
