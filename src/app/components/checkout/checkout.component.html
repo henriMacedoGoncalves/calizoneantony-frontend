@@ -10,18 +10,35 @@
         <td>
           <label for="firstName">First Name</label>
           <input id="firstName" formControlName="firstName" type="text" />
+          <div
+            *ngIf="
+              firstName?.invalid && (firstName?.dirty || firstName?.touched)
+            "
+          >
+            <div *ngIf="firstName?.errors">Your first name is required.</div>
+          </div>
         </td>
       </tr>
       <tr>
         <td>
           <label for="lastName">Last Name</label>
           <input id="lastName" formControlName="lastName" type="text" />
+          <div
+            *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)"
+          >
+            <div *ngIf="lastName?.errors">Your last name is required.</div>
+          </div>
         </td>
       </tr>
       <tr>
         <td>
           <label for="email">Email</label>
           <input id="email" formControlName="email" type="text" />
+          <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+            <div *ngIf="email?.errors">
+              Your email must be a valid email address format
+            </div>
+          </div>
         </td>
       </tr>
     </table>
@@ -42,6 +59,9 @@
               {{ country.title }}
             </option>
           </select>
+          <div *ngIf="country?.invalid && (country?.dirty || country?.touched)">
+            <div *ngIf="country?.errors">Country is required.</div>
+          </div>
         </td>
       </tr>
       <tr>
@@ -54,18 +74,27 @@
               {{ state.title }}
             </option>
           </select>
+          <div *ngIf="state?.invalid && (state?.dirty || state?.touched)">
+            <div *ngIf="state?.errors">State is required.</div>
+          </div>
         </td>
       </tr>
       <tr>
         <td>
-          <label>Address</label>
-          <input type="text" />
+          <label for="street">Street</label>
+          <input id="street" formControlName="street" type="text" />
+          <div *ngIf="street?.invalid && (street?.dirty || street?.touched)">
+            <div *ngIf="street?.errors">Your street is required.</div>
+          </div>
         </td>
       </tr>
       <tr>
         <td>
-          <label>Zip Code</label>
-          <input type="text" />
+          <label for="zipCode">Zip Code</label>
+          <input id="zipCode" formControlName="zipCode" type="text" />
+          <div *ngIf="zipCode?.invalid && (zipCode?.dirty || zipCode?.touched)">
+            <div *ngIf="zipCode?.errors">Your zip code is required.</div>
+          </div>
         </td>
       </tr>
     </table>
