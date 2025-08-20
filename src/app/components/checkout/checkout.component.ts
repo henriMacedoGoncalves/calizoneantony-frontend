@@ -13,6 +13,9 @@ import { CaliZoneAntonyService } from '../../services/cali-zone-antony.service';
 import { State } from '../../common/state';
 import { Country } from '../../common/country';
 import { Order } from '../../common/order';
+import { OrderItem } from '../../common/order-item';
+import { CheckoutService } from '../../services/checkout.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -24,14 +27,16 @@ export class CheckoutComponent implements OnInit {
   checkoutForm!: FormGroup;
 
   countries: Country[] = [];
-  billingAddressStates: State[] = [];
+  addressStates: State[] = [];
 
   totalPrice: number = 0;
 
   constructor(
+    private checkoutService: CheckoutService,
     private formBuilder: FormBuilder,
     private cartService: CartService,
-    private caliZoneAntonyService: CaliZoneAntonyService
+    private caliZoneAntonyService: CaliZoneAntonyService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -39,12 +44,7 @@ export class CheckoutComponent implements OnInit {
 
     this.checkoutForm = this.formBuilder.group({
       user: this.formBuilder.group({
-        firstName: new FormControl('', [
-          Validators.required,
-          Validators.minLength(2),
-          this.notOnlyWhitespace,
-        ]),
-        lastName: new FormControl('', [
+        fullName: new FormControl('', [
           Validators.required,
           Validators.minLength(2),
           this.notOnlyWhitespace,
@@ -60,7 +60,7 @@ export class CheckoutComponent implements OnInit {
           Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
         ]),
       }),
-      billingAddress: this.formBuilder.group({
+      address: this.formBuilder.group({
         street: new FormControl('', [
           Validators.required,
           Validators.minLength(2),
@@ -79,7 +79,6 @@ export class CheckoutComponent implements OnInit {
           this.notOnlyWhitespace,
         ]),
       }),
-      creditCard: this.formBuilder.group({}),
     });
 
     this.caliZoneAntonyService.getCountries().subscribe((data) => {
@@ -97,9 +96,52 @@ export class CheckoutComponent implements OnInit {
     if (this.checkoutForm.invalid) {
       this.checkoutForm.markAllAsTouched();
       return;
-
-      let order = new Order();
     }
+
+    let order = new Order();
+
+    order.price = this.totalPrice;
+
+    const cartItems = this.cartService.cartItems;
+
+    let orderItems: OrderItem[] = cartItems.map(
+      (currentCartItem) => new OrderItem(currentCartItem)
+    );
+
+    order.orderItems = orderItems;
+
+    order.user = this.checkoutForm.controls['user'].value;
+    order.address = this.checkoutForm.controls['address'].value;
+
+    const state: State = JSON.parse(JSON.stringify(order.address.state));
+    const country: Country = JSON.parse(JSON.stringify(order.address.country));
+
+    order.address.state = state.title;
+    order.address.country = country.title;
+
+    if (!this.checkoutForm.invalid) {
+      this.checkoutService.placeOrder(order).subscribe({
+        next: (Response: any) => {
+          console.log('Order received!');
+
+          this.resetCart();
+        },
+        error: (err: any) => {
+          console.log(err.message);
+        },
+      });
+    } else {
+      this.checkoutForm.markAllAsTouched;
+      return;
+    }
+  }
+  resetCart() {
+    this.cartService.cartItems = [];
+    this.cartService.updateCartTotals();
+
+    this.checkoutForm.reset();
+
+    this.router.navigateByUrl('/overview');
   }
 
   getStates(formGroupName: string) {
@@ -108,32 +150,32 @@ export class CheckoutComponent implements OnInit {
     const countryCode = formGroup?.value.country.code;
 
     this.caliZoneAntonyService.getStates(countryCode).subscribe((data) => {
-      this.billingAddressStates = data;
+      this.addressStates = data;
 
       formGroup!.get('state')?.setValue(data[0]);
     });
   }
 
-  get firstName() {
-    return this.checkoutForm.get('user.firstName');
-  }
-  get lastName() {
-    return this.checkoutForm.get('user.lastName');
+  get fullName() {
+    return this.checkoutForm.get('user.fullName');
   }
   get email() {
     return this.checkoutForm.get('user.email');
   }
   get country() {
-    return this.checkoutForm.get('user.country');
+    return this.checkoutForm.get('address.country');
   }
   get state() {
-    return this.checkoutForm.get('user.state');
+    return this.checkoutForm.get('address.state');
   }
   get street() {
-    return this.checkoutForm.get('user.street');
+    return this.checkoutForm.get('address.street');
   }
   get zipCode() {
-    return this.checkoutForm.get('user.zipCode');
+    return this.checkoutForm.get('address.zipCode');
+  }
+  get city() {
+    return this.checkoutForm.get('address.city');
   }
 
   notOnlyWhitespace(control: FormControl): ValidationErrors | null {

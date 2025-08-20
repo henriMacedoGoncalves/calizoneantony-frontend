@@ -8,25 +8,12 @@
       </tr>
       <tr>
         <td>
-          <label for="firstName">First Name</label>
-          <input id="firstName" formControlName="firstName" type="text" />
+          <label for="fullName">Full Name</label>
+          <input id="fullName" formControlName="fullName" type="text" />
           <div
-            *ngIf="
-              firstName?.invalid && (firstName?.dirty || firstName?.touched)
-            "
+            *ngIf="fullName?.invalid && (fullName?.dirty || fullName?.touched)"
           >
-            <div *ngIf="firstName?.errors">Your first name is required.</div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <label for="lastName">Last Name</label>
-          <input id="lastName" formControlName="lastName" type="text" />
-          <div
-            *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)"
-          >
-            <div *ngIf="lastName?.errors">Your last name is required.</div>
+            <div *ngIf="fullName?.errors">Your full name is required.</div>
           </div>
         </td>
       </tr>
@@ -45,32 +32,26 @@
   </div>
 
   <div>
-    <table formGroupName="billingAddress">
+    <table formGroupName="address">
       <tr>
-        <th><h3>Billing Address</h3></th>
+        <th><h3>Address</h3></th>
       </tr>
       <tr>
         <td>
-          <select
-            formControlName="country"
-            (change)="getStates('billingAddress')"
-          >
+          <select formControlName="country" (change)="getStates('address')">
             <option *ngFor="let country of countries" [ngValue]="country">
               {{ country.title }}
             </option>
           </select>
-          <div *ngIf="country?.invalid && (country?.dirty || country?.touched)">
+          <!-- <div *ngIf="country?.invalid && (country?.dirty || country?.touched)">
             <div *ngIf="country?.errors">Country is required.</div>
-          </div>
+          </div> -->
         </td>
       </tr>
       <tr>
         <td>
           <select formControlName="state">
-            <option
-              *ngFor="let state of billingAddressStates"
-              [ngValue]="state"
-            >
+            <option *ngFor="let state of addressStates" [ngValue]="state">
               {{ state.title }}
             </option>
           </select>
@@ -90,6 +71,15 @@
       </tr>
       <tr>
         <td>
+          <label for="city">City</label>
+          <input id="city" formControlName="city" type="text" />
+          <div *ngIf="city?.invalid && (city?.dirty || city?.touched)">
+            <div *ngIf="city?.errors">Your city is required.</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
           <label for="zipCode">Zip Code</label>
           <input id="zipCode" formControlName="zipCode" type="text" />
           <div *ngIf="zipCode?.invalid && (zipCode?.dirty || zipCode?.touched)">
@@ -101,7 +91,7 @@
   </div>
 
   <div>
-    <table>
+    <!-- <table>
       <tr>
         <th>
           <h3>Credit Card Details</h3>
@@ -129,7 +119,7 @@
           <input type="text" />
         </td>
       </tr>
-    </table>
+    </table> -->
     <table>
       <tr>
         <th>
