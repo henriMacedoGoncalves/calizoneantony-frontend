@@ -11,8 +11,15 @@
     </li>
   </ul>
   <ul>
-    <li *ngIf="!isAuthenticated"><a routerLink="/login">Login</a></li>
+    <li *ngIf="!isAuthenticated"><button (click)="login()">Log in</button></li>
     <li *ngIf="isAuthenticated"><app-cart-status></app-cart-status></li>
-    <li *ngIf="isAuthenticated"><a routerLink="/profile">Profile</a></li>
+    <li *ngIf="isAuthenticated">
+      <ng-container *ngIf="authUser | async as authUser; else fallback"
+        ><a routerLink="/profile">{{ authUser.given_name }}</a></ng-container
+      >
+      <ng-template #fallback>
+        <a routerLink="/profile">Profile</a>
+      </ng-template>
+    </li>
   </ul>
 </nav>

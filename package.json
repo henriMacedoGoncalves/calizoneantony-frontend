@@ -19,6 +19,7 @@
     "@angular/platform-browser": "^19.2.14",
     "@angular/platform-browser-dynamic": "^19.2.14",
     "@angular/router": "^19.2.14",
+    "@auth0/auth0-angular": "^2.2.3",
     "@coreui/angular": "~5.4.13",
     "@coreui/coreui": "~5.2.0 || ~5.4.0",
     "@coreui/icons-angular": "~5.4.13",

@@ -1,19 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
+  private baseUrl = 'http://localhost:8080/api/user';
 
-  private isAuthenticatedInSubject = new BehaviorSubject<boolean>(false);
-  isAuthenticated = this.isAuthenticatedInSubject.asObservable();
+  constructor(private httpClient: HttpClient) {}
 
-  login() {
-    this.isAuthenticatedInSubject.next(true);
-  }
-
-  logout() {
-    this.isAuthenticatedInSubject.next(false);
+  userExists(subId: string): Observable<boolean> {
+    return this.httpClient.get<boolean>(`${this.baseUrl}/verify/${subId}`);
   }
 }
