@@ -9,30 +9,46 @@ import { AboutMeComponent } from './components/about-me/about-me.component';
 import { EbookDetailsComponent } from './components/ebook-details/ebook-details.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
-import { AuthGuard } from '@auth0/auth0-angular';
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
   { path: '', component: IntroductionComponent },
   { path: 'aboutme', component: AboutMeComponent },
   { path: 'community', component: CommunityComponent },
-  { path: 'overview', component: OverviewComponent, canActivate: [AuthGuard] },
+  {
+    path: 'overview',
+    component: OverviewComponent,
+    canActivate: [authGuard],
+  },
   {
     path: 'ebooks',
     component: EbooksComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'ebooks/:id',
     component: EbookDetailsComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'onlinecoaching',
     component: OnlinecoachingComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
-  { path: 'cart', component: CartDetailsComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'checkout', component: CheckoutComponent },
+  {
+    path: 'cart',
+    component: CartDetailsComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
+    canActivate: [authGuard],
+  },
   { path: 'callback', component: IntroductionComponent },
 ];

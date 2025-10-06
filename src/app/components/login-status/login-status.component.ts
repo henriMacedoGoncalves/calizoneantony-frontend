@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../../services/login.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CartStatusComponent } from '../cart-status/cart-status.component';
-import { AuthService } from '@auth0/auth0-angular';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login-status',
@@ -14,21 +13,19 @@ import { AuthService } from '@auth0/auth0-angular';
 export class LoginStatusComponent implements OnInit {
   isAuthenticated: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.authService.isAuthenticated$.subscribe((status) => {
+    this.userService.isAuthenticated.subscribe((status) => {
       this.isAuthenticated = status;
     });
   }
 
   login() {
-    this.authService.loginWithRedirect({
-      appState: { target: '/overview' },
-    });
+    this.userService.login();
   }
 
   get authUser() {
-    return this.authService.user$;
+    return this.userService.authUser;
   }
 }

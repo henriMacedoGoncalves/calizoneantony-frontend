@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '@auth0/auth0-angular';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,15 +11,15 @@ import { AuthService } from '@auth0/auth0-angular';
 export class ProfileComponent implements OnInit {
   isAuthenticated: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.authService.isAuthenticated$.subscribe((status) => {
+    this.userService.isAuthenticated.subscribe((status) => {
       this.isAuthenticated = status;
     });
   }
 
   logout() {
-    this.authService.logout();
+    this.userService.logout();
   }
 }

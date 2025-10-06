@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-overview',
@@ -12,13 +12,13 @@ import { Router } from '@angular/router';
 export class OverviewComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private loginService: LoginService,
+    private userService: UserService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.authService.user$.subscribe((user) => {
-      this.loginService.userExists(user?.sub!).subscribe({
+      this.userService.userExists(user?.sub!).subscribe({
         next: (exists: boolean) => {
           if (!exists) {
             this.router.navigate(['/profile']);

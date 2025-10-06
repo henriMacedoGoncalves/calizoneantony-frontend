@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { CartItem } from '../../common/cart-item';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-ebooks',

@@ -8,7 +8,7 @@ import { EbookPage } from '../common/ebook-page';
   providedIn: 'root',
 })
 export class EbookService {
-  private baseUrl = 'http://localhost:8080/api/ebooks';
+  private baseUrl = 'http://localhost:8080/api/ebook';
 
   constructor(private httpClient: HttpClient) {}
 
